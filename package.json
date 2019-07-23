@@ -1,0 +1,34 @@
+{
+  "name": "ranvier",
+  "description": "MUD game engine",
+  "homepage": "https://ranviermud.com",
+  "bugs": "https://github.com/ranviermud/core/issues",
+  "license": "MIT",
+  "author": "Shawn Biddle (http://shawnbiddle.com)",
+  "version": "3.0.6",
+  "repository": "github:ranviermud/core",
+  "engines": {
+    "node": ">= 10.12.0"
+  },
+  "scripts": {
+    "test": "nyc --reporter=html --reporter=text --include=src --all mocha --recursive",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.0",
+    "js-yaml": "^3.12.0",
+    "longjohn": "^0.2.11",
+    "pretty-error": "^2.0.2",
+    "require-dir": "^1.1.0",
+    "sty": "",
+    "uuid": "^3.3.2",
+    "winston": "^2.4.4",
+    "wrap-ansi": "^2.0.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "mocha": "^5.2.0",
+    "nyc": "^13.1.0"
+  }
+}
