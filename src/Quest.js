@@ -15,8 +15,8 @@ class Quest extends EventEmitter {
     this.id = id;
     this.entityReference = config.entityReference;
     this.config = Object.assign({
-      title: 'Missing Quest Title',
-      description: 'Missing Quest Description',
+      title: 'Отсутствует название задания',
+      description: 'Отсутствует описание задания',
       completionMessage: null,
       requires: [],
       level: 1,

@@ -212,7 +212,7 @@ class Skill {
       },
       listeners: {
         effectDeactivated: function () {
-          Broadcast.sayAt(this.target, `You may now use <bold>${this.skill.name}</bold> again.`);
+          Broadcast.sayAt(this.target, `Вы снова можете использовать <bold>${this.skill.name}</bold>.`);
         }
       }
     };

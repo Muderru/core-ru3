@@ -12,6 +12,10 @@ const CommandQueue = require('./CommandQueue');
  * @property {number} id   Area-relative id (vnum)
  * @property {Area}   area Area npc belongs to (not necessarily the area they're currently in)
  * @property {Map} behaviors
+ * @property {string}  damageVerb сообщение о ударе
+ * @property {string}  travelVerb сообщение о передвижении
+ * @property {number}  min_damage   Минимальный базовый урон
+ * @property {number}  max_damage   Максимальный базовый урон
  * @extends Character
  * @mixes Scriptable
  */
@@ -38,6 +42,10 @@ class Npc extends Scriptable(Character) {
     this.keywords = data.keywords;
     this.quests = data.quests || [];
     this.uuid = data.uuid || uuid();
+    this.damageVerb = data.damageVerb;
+    this.travelVerb = data.travelVerb;
+    this.min_damage = data.min_damage  || 1;
+    this.max_damage = data.max_damage  || 2;
     this.commandQueue = new CommandQueue();
   }
 
