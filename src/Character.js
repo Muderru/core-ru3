@@ -625,6 +625,8 @@ class Character extends Metadatable(EventEmitter) {
       tname: this.tname,
       pname: this.pname,
       gender: this.gender,
+      travelVerbIn: this.travelVerbIn,
+      travelVerbOut: this.travelVerbOut,
       room: this.room.entityReference,
       effects: this.effects.serialize(),
     };
