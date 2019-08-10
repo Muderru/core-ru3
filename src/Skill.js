@@ -16,6 +16,7 @@ const Broadcast = require('./Broadcast');
  * @property {function ()}      run  Function to run when skill is executed/activated
  * @property {GameState}        state
  * @property {SkillType}        type
+ * @param {Array<string>}       aliases
  */
 class Skill {
   /**
@@ -32,6 +33,7 @@ class Skill {
       info = _ => {},
       initiatesCombat = false,
       name,
+      aliases = [],
       requiresTarget = true,
       resource = null, /* format [{ attribute: 'someattribute', cost: 10}] */
       run = _ => {},
@@ -63,6 +65,7 @@ class Skill {
     this.state = state;
     this.targetSelf = targetSelf;
     this.type = type;
+    this.aliases = aliases;
   }
 
   /**

@@ -23,6 +23,9 @@ class SkillManager {
    */
   add(skill) {
     this.skills.set(skill.id, skill);
+    if (skill.aliases) {
+      skill.aliases.forEach(alias => this.skills.set(alias, skill));
+    }
   }
 
   /**
