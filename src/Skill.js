@@ -17,6 +17,8 @@ const Broadcast = require('./Broadcast');
  * @property {GameState}        state
  * @property {SkillType}        type
  * @param {Array<string>}       aliases
+ * @property {string}    gender            используется для корректного построения фраз
+ * @property {string}    damageVerb        используется для умений и эффектов наносящих урон противнику
  */
 class Skill {
   /**
@@ -33,6 +35,8 @@ class Skill {
       info = _ => {},
       initiatesCombat = false,
       name,
+      gender,
+      damageVerb,
       aliases = [],
       requiresTarget = true,
       resource = null, /* format [{ attribute: 'someattribute', cost: 10}] */
@@ -58,6 +62,8 @@ class Skill {
     this.info = info.bind(this);
     this.initiatesCombat = initiatesCombat;
     this.name = name;
+    this.gender = gender;
+    this.damageVerb = damageVerb;
     this.options = options;
     this.requiresTarget = requiresTarget;
     this.resource = resource;

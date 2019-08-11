@@ -24,6 +24,8 @@ var EffectModifiers;
  * @property {string}    id     filename minus .js
  * @property {EffectModifiers} modifiers Attribute modifier functions
  * @property {string}    name
+ * @property {string}    gender            используется для корректного построения фраз
+ * @property {string}    damageVerb        используется для умений и эффектов наносящих урон противнику
  * @property {number}    remaining Number of seconds remaining
  * @property {number}    startedAt Date.now() time this effect became active
  * @property {object}    state  Configuration of this _type_ of effect (magnitude, element, stat, etc.)
@@ -45,6 +47,8 @@ class Effect extends EventEmitter {
       hidden: false,
       maxStacks: 0,
       name: 'Unnamed Effect',
+      gender: '',
+      damageVerb: '',
       persists: true,
       refreshes: false,
       tickInterval: false,
@@ -84,6 +88,20 @@ class Effect extends EventEmitter {
    */
   get name() {
     return this.config.name;
+  }
+
+  /**
+   * @type {string}
+   */
+  get gender() {
+    return this.config.gender;
+  }
+
+  /**
+   * @type {string}
+   */
+  get damageVerb() {
+    return this.config.damageVerb;
   }
 
   /**
