@@ -43,6 +43,12 @@ class Character extends Metadatable(EventEmitter) {
     this.vname = data.vname;
     this.tname = data.tname;
     this.pname = data.pname;
+    this.Name = data.name[0].toUpperCase() + data.name.slice(1);
+    this.Rname = data.rname[0].toUpperCase() + data.rname.slice(1);
+    this.Dname = data.dname[0].toUpperCase() + data.dname.slice(1);
+    this.Vname = data.vname[0].toUpperCase() + data.vname.slice(1);
+    this.Tname = data.tname[0].toUpperCase() + data.tname.slice(1);
+    this.Pname = data.pname[0].toUpperCase() + data.pname.slice(1);
     this.gender = data.gender;
     this.damageVerb = data.damageVerb;
     this.travelVerbIn = data.travelVerbIn;

@@ -70,6 +70,12 @@ class Item extends GameEntity {
     this.vname       = item.vname;
     this.tname       = item.tname;
     this.pname       = item.pname;
+    this.Name = item.name[0].toUpperCase() + item.name.slice(1);
+    this.Rname = item.rname[0].toUpperCase() + item.rname.slice(1);
+    this.Dname = item.dname[0].toUpperCase() + item.dname.slice(1);
+    this.Vname = item.vname[0].toUpperCase() + item.vname.slice(1);
+    this.Tname = item.tname[0].toUpperCase() + item.tname.slice(1);
+    this.Pname = item.pname[0].toUpperCase() + item.pname.slice(1);
     this.gender      = item.gender;
     this.damageVerb  = item.damageVerb;
     this.room        = item.room || null;
