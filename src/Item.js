@@ -26,7 +26,7 @@ const { Inventory, InventoryFullError } = require('./Inventory');
  * @property {string}     tname       (Творительный падеж - доволен кем? чем?)
  * @property {string}     pname       (Предложный падеж - думать о ком? о чем?)
  * @property {string}     gender      (род - male, female, neuter, plural)
- * @property {string}     damageVerb  сообщение о ударе
+ * @property {string}     damageVerb   сообщение о ударе
  * @property {?Room}   room        Room the item is currently in
  * @property {string}  roomDesc    Description shown when item is seen in a room
  * @property {string}  script      A custom script for this item
@@ -42,7 +42,7 @@ const { Inventory, InventoryFullError } = require('./Inventory');
  */
 class Item extends GameEntity {
   constructor (area, item) {
-    super();
+    super(item);
     const validate = ['keywords', 'name', 'id'];
 
     for (const prop of validate) {
@@ -224,10 +224,7 @@ class Item extends GameEntity {
   }
 
   hydrate(state, serialized = {}) {
-    if (this.__hydrated) {
-      Logger.warn('Attempted to hydrate already hydrated item.');
-      return false;
-    }
+    super.hydrate(state);
 
     // perform deep copy if behaviors is set to prevent sharing of the object between
     // item instances
@@ -263,17 +260,16 @@ class Item extends GameEntity {
         this.addItem(newItem);
       });
     }
-
-    this.__hydrated = true;
   }
 
   serialize() {
+    const data = super.serialize();
     let behaviors = {};
     for (const [key, val] of this.behaviors) {
       behaviors[key] = val;
     }
 
-    return {
+    return Object.assign(data, {
       entityReference: this.entityReference,
       inventory: this.inventory && this.inventory.serialize(),
 
@@ -292,7 +288,7 @@ class Item extends GameEntity {
       // behaviors are serialized in case their config was modified during gameplay
       // and that state needs to persist (charges of a scroll remaining, etc)
       behaviors,
-    };
+    });
   }
 }
 
