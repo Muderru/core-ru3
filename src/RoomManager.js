@@ -14,29 +14,22 @@ class RoomManager {
    * @param {string} entityRef
    * @return {Room}
    */
-  getRoom(entityRef, instanceId = null) {
-    const ref = this.getInstanceRef(entityRef, instanceId);
-    return this.rooms.get(ref);
+  getRoom(entityRef) {
+    return this.rooms.get(entityRef);
   }
 
   /**
    * @param {Room} room
    */
-  addRoom(room, instanceId = null) {
-    const ref = this.getInstanceRef(room.entityReference, instanceId);
-    this.rooms.set(ref, room);
+  addRoom(room) {
+    this.rooms.set(room.entityReference, room);
   }
 
   /**
    * @param {Room} room
    */
-  removeRoom(room, instanceId = null) {
-    const ref = this.getInstanceRef(room.entityReference, instanceId);
-    this.rooms.delete(ref);
-  }
-
-  getInstanceRef(entityRef, instanceId = null) {
-    return entityRef + (instanceId ? '__' + instanceId : '');
+  removeRoom(room) {
+    this.rooms.delete(room.entityReference);
   }
 }
 

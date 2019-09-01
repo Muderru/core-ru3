@@ -23,13 +23,11 @@ const AreaFloor = require('./AreaFloor');
  */
 class Area extends GameEntity {
   constructor(bundle, name, manifest) {
-    super(manifest);
+    super();
     this.bundle = bundle;
     this.name = name;
     this.title = manifest.title;
     this.metadata = manifest.metadata || {};
-    this.instanced = manifest.instanced || false;
-    this.instanceId = null;
     this.rooms = new Map();
     this.npcs = new Set();
     this.map = new Map();
@@ -134,7 +132,6 @@ class Area extends GameEntity {
    */
   addNpc(npc) {
     this.npcs.add(npc);
-    this.emit('npcAdded', npc);
   }
 
   /**
@@ -142,7 +139,6 @@ class Area extends GameEntity {
    * @param {Npc} npc
    */
   removeNpc(npc) {
-    this.emit('npcRemoved', npc);
     this.npcs.delete(npc);
   }
 
@@ -178,10 +174,8 @@ class Area extends GameEntity {
     const { rooms } = state.AreaFactory.getDefinition(this.name);
     for (const roomRef of rooms) {
       const room = state.RoomFactory.create(this, roomRef);
-      room.instanceId = this.instanceId;
       this.addRoom(room);
-      state.RoomManager.addRoom(room, this.instanceId);
-
+      state.RoomManager.addRoom(room);
       room.hydrate(state);
       /**
        * Fires after the room is hydrated and added to its area

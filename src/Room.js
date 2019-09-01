@@ -22,7 +22,7 @@ const Logger = require('./Logger');
  */
 class Room extends GameEntity {
   constructor(area, def) {
-    super(def);
+    super();
     const required = ['title', 'description', 'id'];
     for (const prop of required) {
       if (!(prop in def)) {
@@ -50,7 +50,6 @@ class Room extends GameEntity {
     // create by-val copies of the doors config so the lock/unlock don't accidentally modify the original definition
     this.doors = new Map(Object.entries(JSON.parse(JSON.stringify(def.doors || {}))));
     this.defaultDoors = def.doors;
-    this.instanceId = null;
 
     this.items = new Set();
     this.npcs = new Set();
@@ -311,7 +310,6 @@ class Room extends GameEntity {
     const newItem = state.ItemFactory.create(this.area, entityRef);
     newItem.hydrate(state);
     newItem.sourceRoom = this;
-    newItem.instanceId = this.instanceId;
     state.ItemManager.add(newItem);
     this.addItem(newItem);
     /**
@@ -332,7 +330,6 @@ class Room extends GameEntity {
     const newNpc = state.MobFactory.create(this.area, entityRef);
     newNpc.hydrate(state);
     newNpc.sourceRoom = this;
-    newNpc.instanceId = this.instanceId;
     this.area.addNpc(newNpc);
     this.addNpc(newNpc);
     this.spawnedNpcs.add(newNpc);
@@ -344,8 +341,6 @@ class Room extends GameEntity {
   }
 
   hydrate(state) {
-    super.hydrate(state);
-
     this.setupBehaviors(state.RoomBehaviorManager);
 
     /**

@@ -60,7 +60,6 @@ class Effect extends EventEmitter {
     this.paused = 0;
     this.modifiers = Object.assign({
       attributes: {},
-      properties: {},
       incomingDamage: (damage, current) => current,
       outgoingDamage: (damage, current) => current,
     }, def.modifiers);
@@ -215,11 +214,9 @@ class Effect extends EventEmitter {
   }
 
   /**
-   * Apply effect attribute modifiers to a given value
-   *
    * @param {string} attrName
    * @param {number} currentValue
-   * @return {number} attribute value modified by effect
+   * @return {number} attribute modified by effect
    */
   modifyAttribute(attrName, currentValue) {
     let modifier = _ => _;
@@ -229,25 +226,6 @@ class Effect extends EventEmitter {
       };
     } else if (attrName in this.modifiers.attributes) {
       modifier = this.modifiers.attributes[attrName];
-    }
-    return modifier.bind(this)(currentValue);
-  }
-
-  /**
-   * Apply effect property modifiers to a given value
-   *
-   * @param {string} propertyName
-   * @param {*} currentValue
-   * @return {*} property value modified by effect
-   */
-  modifyProperty(propertyName, currentValue) {
-    let modifier = _ => _;
-    if (typeof this.modifiers.properties === 'function') {
-      modifier = (current) => {
-        return this.modifiers.properties.bind(this)(propertyName, current);
-      };
-    } else if (propertyName in this.modifiers.properties) {
-      modifier = this.modifiers.properties[propertyName];
     }
     return modifier.bind(this)(currentValue);
   }
@@ -302,19 +280,17 @@ class Effect extends EventEmitter {
    * @param {Object} data
    */
   hydrate(state, data) {
-    if (data.config) {
-      data.config.duration = data.config.duration === 'inf' ? Infinity : data.config.duration;
-      this.config = data.config;
-    }
+    data.config.duration = data.config.duration === 'inf' ? Infinity : data.config.duration;
+    this.config = data.config;
 
     if (!isNaN(data.elapsed)) {
       this.startedAt = Date.now() - data.elapsed;
     }
 
-    if (data.state && !isNaN(data.state.lastTick)) {
+    if (!isNaN(data.state.lastTick)) {
       data.state.lastTick = Date.now() - data.state.lastTick;
-      this.state = data.state;
     }
+    this.state = data.state;
 
     if (data.skill) {
       this.skill = state.SkillManager.get(data.skill) || state.SpellManager.get(data.skill);
