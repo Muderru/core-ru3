@@ -33,6 +33,7 @@ class Area extends GameEntity {
     this.map = new Map();
     this.script = manifest.script;
     this.behaviors = new Map(Object.entries(manifest.behaviors || {}));
+    this.time = 0;
 
     this.on('updateTick', state => {
       this.update(state);
