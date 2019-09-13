@@ -31,7 +31,7 @@ class QuestGoal extends EventEmitter {
   getProgress() {
     return {
       percent: 0,
-      display: '[ВНИМАНИЕ] Задание не имеет прогресс-бара. Сообщите администратору!'
+      display: '[ВНИМАНИЕ] Задание не имеет прогресс-бара. Сообщите администратору игры!'
     };
   }
 
