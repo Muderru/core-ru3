@@ -42,7 +42,11 @@ class extends parentClass {
 
     const oldValue = base[property];
     base[property] = value;
-    
+
+    if(value === oldValue) {
+      return;
+    }
+
     /**
     * @event Metadatable#metadataUpdate
     * @param {string} key

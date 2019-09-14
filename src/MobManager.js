@@ -21,10 +21,15 @@ class MobManager {
    */
   removeMob(mob) {
     mob.effects.clear();
+    const sourceRoom = mob.sourceRoom;
+    if (sourceRoom) {
+      sourceRoom.area.removeNpc(mob);
+      sourceRoom.removeNpc(mob, true);
+    }
     const room = mob.room;
-    if (room) {
+    if (room && room !== sourceRoom) {
       room.area.removeNpc(mob);
-      room.removeNpc(mob, true);
+      room.removeNpc(mob);
     }
     mob.__pruned = true;
     mob.removeAllListeners();

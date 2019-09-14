@@ -329,6 +329,9 @@ class Character extends Metadatable(EffectableEntity) {
    * @fires Character#unfollowed
    */
   unfollow() {
+    if (!this.following) {
+      return;
+    }
     this.following.removeFollower(this);
     /**
      * @event Character#unfollowed

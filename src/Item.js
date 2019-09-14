@@ -247,6 +247,8 @@ class Item extends GameEntity {
       this.area = state.AreaManager.getArea(this.area);
     }
 
+    state.ItemManager.add(this);
+
     // if the item was saved with a custom inventory hydrate it
     if (this.inventory) {
       this.inventory.hydrate(state, this);
@@ -258,6 +260,10 @@ class Item extends GameEntity {
         newItem.hydrate(state);
         state.ItemManager.add(newItem);
         this.addItem(newItem);
+        /**
+         * @event Item#spawn
+         */
+        newItem.emit('spawn');
       });
     }
   }
