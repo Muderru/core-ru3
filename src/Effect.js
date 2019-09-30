@@ -169,22 +169,23 @@ class Effect extends EventEmitter {
      * @event Effect#effectActivated
      */
     this.emit('effectActivated');
+    this.active = true;
   }
 
   /**
-   * Set this effect inactive
+   * Set this effect active
    * @fires Effect#effectDeactivated
    */
   deactivate() {
     if (!this.active) {
       return;
     }
-    this.active = false;
 
     /**
      * @event Effect#effectDeactivated
      */
     this.emit('effectDeactivated');
+    this.active = false;
   }
 
   /**
