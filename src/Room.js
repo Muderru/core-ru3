@@ -17,6 +17,7 @@ const Logger = require('./Logger');
  * @property {string}        script       Name of custom script attached to this room
  * @property {string}        title        Title shown on look/scan
  * @property {object}        doors        Doors restricting access to this room. See documentation for format
+ * @property {number}        light        Освещенность комнаты.
  *
  * @extends GameEntity
  */
@@ -46,6 +47,7 @@ class Room extends GameEntity {
     this.entityReference = this.area.name + ':' + def.id;
     this.exits = def.exits || [];
     this.id = def.id;
+    this.light = def.light || 50;
     this.title = def.title;
     // create by-val copies of the doors config so the lock/unlock don't accidentally modify the original definition
     this.doors = new Map(Object.entries(JSON.parse(JSON.stringify(def.doors || {}))));

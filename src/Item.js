@@ -27,6 +27,7 @@ const { Inventory, InventoryFullError } = require('./Inventory');
  * @property {string}     pname       (Предложный падеж - думать о ком? о чем?)
  * @property {string}     gender      (род - male, female, neuter, plural)
  * @property {string}     damageVerb   сообщение о ударе
+ * @property {number}  light           свечение предмета
  * @property {?Room}   room        Room the item is currently in
  * @property {string}  roomDesc    Description shown when item is seen in a room
  * @property {string}  script      A custom script for this item
@@ -78,6 +79,7 @@ class Item extends GameEntity {
     this.Pname = item.pname[0].toUpperCase() + item.pname.slice(1);
     this.gender      = item.gender;
     this.damageVerb  = item.damageVerb;
+    this.light       = item.light || 0;
     this.room        = item.room || null;
     this.roomDesc    = item.roomDesc || '';
     this.script      = item.script || null;
