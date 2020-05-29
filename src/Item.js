@@ -55,7 +55,7 @@ class Item extends GameEntity {
     this.metadata  = item.metadata || {};
     this.behaviors = new Map(Object.entries(item.behaviors || {}));
     this.defaultItems = item.items || [];
-    this.description = item.description || 'Nothing special.';
+    this.description = item.description || 'Ничего особенного.';
     this.entityReference = item.entityReference; // EntityFactory key
     this.id          = item.id;
 

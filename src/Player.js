@@ -245,6 +245,10 @@ class Player extends Character {
 
     return data;
   }
+
+  get isPlayer() {
+    return true;
+  }
 }
 
 module.exports = Player;

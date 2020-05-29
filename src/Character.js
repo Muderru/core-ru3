@@ -277,6 +277,9 @@ class Character extends Metadatable(EffectableEntity) {
    * @return {Item|boolean}
    */
   hasItem(itemReference) {
+    if (!this.inventory) {
+      return false;
+    }
     for (const [ uuid, item ] of this.inventory) {
       if (item.entityReference === itemReference) {
         return item;
