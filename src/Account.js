@@ -24,6 +24,7 @@ class Account extends Metadatable(EventEmitter) {
     this.password   = data.password;
     this.banned = data.banned || false;
     this.deleted = data.deleted || false;
+    this.guild = data.guild || '';
     // Arbitrary data bundles are free to shove whatever they want in
     // WARNING: values must be JSON.stringify-able
     this.metadata = data.metadata || {};
@@ -133,6 +134,7 @@ class Account extends Metadatable(EventEmitter) {
       username,
       characters,
       password,
+      guild,
       metadata,
     } = this;
 
@@ -140,6 +142,7 @@ class Account extends Metadatable(EventEmitter) {
       username,
       characters,
       password,
+      guild,
       metadata
     };
   }

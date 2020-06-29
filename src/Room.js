@@ -338,6 +338,22 @@ class Room extends GameEntity {
     this.area.addNpc(newNpc);
     this.addNpc(newNpc);
     this.spawnedNpcs.add(newNpc);
+    const attributes = [ 'strength', 'agility', 'intellect', 'stamina', 'armor', 'critical', 
+          'cutting_resistance', 'crushing_resistance', 'piercing_resistance', 'fire_resistance', 
+          'cold_resistance', 'lightning_resistance', 'earth_resistance', 'acid_resistance', 
+          'chaos_resistance', 'ether_resistance', 'cutting_damage', 'crushing_damage', 
+          'piercing_damage', 'fire_damage', 'cold_damage', 'lightning_damage', 'earth_damage', 
+          'acid_damage', 'chaos_damage', 'ether_damage', 'light', 'invisibility', 'detect_invisibility', 
+          'hide', 'detect_hide', 'freedom', 'health_regeneration', 'mana_regeneration', 'health_percent', 
+          'mana_percent', 'armor_percent', 'critical_percent', 'critical_damage_percent', 
+          'critical_damage_reduction_percent', 'skill_damage_percent', 'spell_damage_percent', 
+          'out_heal_percent', 'in_heal_percent', 'dot_damage_percent', 'dot_duration_percent', 
+          'dot_duration_reduction_percent', 'unfreedom_duration_reduction_percent', 'swift' ]
+    for (const attribute of attributes) {
+      if (!newNpc.hasAttribute(attribute)) {
+        newNpc.addAttribute(state.AttributeFactory.create(attribute, 0));
+      }
+    }
     /**
      * @event Npc#spawn
      */
