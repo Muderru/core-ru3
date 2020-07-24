@@ -348,7 +348,7 @@ class Room extends GameEntity {
           'mana_percent', 'armor_percent', 'critical_percent', 'critical_damage_percent', 'effect_duration_percent',
           'critical_damage_reduction_percent', 'skill_damage_percent', 'spell_damage_percent', 
           'out_heal_percent', 'in_heal_percent', 'dot_damage_percent', 'dot_duration_percent', 
-          'dot_duration_reduction_percent', 'unfreedom_duration_reduction_percent', 'swift' ]
+          'dot_duration_reduction_percent', 'unfreedom_duration_reduction_percent', 'swift' ];
     for (const attribute of attributes) {
       if (!newNpc.hasAttribute(attribute)) {
         newNpc.addAttribute(state.AttributeFactory.create(attribute, 0));

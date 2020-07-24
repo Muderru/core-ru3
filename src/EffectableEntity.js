@@ -3,6 +3,7 @@
 const EventEmitter = require('events');
 const EffectList = require('./EffectList');
 const Attributes = require('./Attributes');
+const Logger = require('./Logger');
 
 /**
  * Base class for game entities that can have effects/attributes

@@ -100,7 +100,6 @@ class AttributeFormula
   evaluate(attribute, ...args) {
     if (typeof this.formula !== 'function') {
       throw new Error(`Formula is not callable ${this.formula}`);
-      return;
     }
 
     return this.formula.bind(attribute)(...args);

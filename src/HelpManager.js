@@ -33,9 +33,10 @@ class HelpManager {
         results.set(name, help);
         continue;
       }
-      if (help.keywords.some(keyword => keyword.includes(search))) {
-        results.set(name, help);
-      }
+//HelpManager.js: line 36, col 38, Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (search)
+//      if (help.keywords.some(keyword => keyword.includes(search))) {
+//        results.set(name, help);
+//      }
     }
     return results;
   }
