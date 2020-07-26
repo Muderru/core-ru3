@@ -1,5 +1,3 @@
-'use strict';
-
 const EventEmitter = require('events');
 
 /**
@@ -14,7 +12,7 @@ class Quest extends EventEmitter {
 
     this.id = id;
     this.entityReference = config.entityReference;
-    this.config = Object.assign({
+    this.config = {
       title: 'Отсутствует название задания',
       description: 'Отсутствует описание задания',
       completionMessage: null,
@@ -24,7 +22,8 @@ class Quest extends EventEmitter {
       repeatable: false,
       rewards: [],
       goals: [],
-    }, config);
+      ...config,
+    };
 
     this.player = player;
     this.goals = [];
@@ -45,7 +44,7 @@ class Quest extends EventEmitter {
       return;
     }
 
-    this.goals.forEach(goal => {
+    this.goals.forEach((goal) => {
       goal.emit(event, ...args);
     });
   }
@@ -86,8 +85,8 @@ class Quest extends EventEmitter {
    */
   getProgress() {
     let overallPercent = 0;
-    let overallDisplay = [];
-    this.goals.forEach(goal => {
+    const overallDisplay = [];
+    this.goals.forEach((goal) => {
       const goalProgress = goal.getProgress();
       overallPercent += goalProgress.percent;
       overallDisplay.push(goalProgress.display);
@@ -105,7 +104,7 @@ class Quest extends EventEmitter {
    */
   serialize() {
     return {
-      state: this.goals.map(goal => goal.serialize()),
+      state: this.goals.map((goal) => goal.serialize()),
       progress: this.getProgress(),
       config: {
         desc: this.config.desc,

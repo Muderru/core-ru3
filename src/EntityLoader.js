@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Used to CRUD an entity from a configured DataSource
  */

@@ -1,5 +1,3 @@
-'use strict';
-
 const EffectableEntity = require('./EffectableEntity');
 const Metadatable = require('./Metadatable');
 const Scriptable = require('./Scriptable');

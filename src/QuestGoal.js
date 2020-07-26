@@ -1,5 +1,3 @@
-'use strict';
-
 const EventEmitter = require('events');
 
 /**
@@ -17,9 +15,9 @@ class QuestGoal extends EventEmitter {
   constructor(quest, config, player) {
     super();
 
-    this.config = Object.assign({
-      // no defaults currently
-    }, config);
+    this.config = { // no defaults currently
+      ...config,
+    };
     this.quest = quest;
     this.state = {};
     this.player = player;
@@ -31,7 +29,7 @@ class QuestGoal extends EventEmitter {
   getProgress() {
     return {
       percent: 0,
-      display: '[ВНИМАНИЕ] Задание не имеет прогресс-бара. Сообщите администратору игры!'
+      display: '[ВНИМАНИЕ] Задание не имеет прогресс-бара. Сообщите администратору игры!',
     };
   }
 

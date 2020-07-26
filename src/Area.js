@@ -1,5 +1,3 @@
-'use strict';
-
 const GameEntity = require('./GameEntity');
 const AreaFloor = require('./AreaFloor');
 
@@ -37,7 +35,7 @@ class Area extends GameEntity {
     this.behaviors = new Map(Object.entries(manifest.behaviors || {}));
     this.time = 0;
 
-    this.on('updateTick', state => {
+    this.on('updateTick', (state) => {
       this.update(state);
     });
   }
@@ -57,7 +55,6 @@ class Area extends GameEntity {
   get floors() {
     return [...this.map.keys()].sort();
   }
-
 
   /**
    * @param {string} id Room id
@@ -109,7 +106,7 @@ class Area extends GameEntity {
       throw new Error('Room does not have coordinates');
     }
 
-    const {x, y, z} = room.coordinates;
+    const { x, y, z } = room.coordinates;
 
     if (!this.map.has(z)) {
       this.map.set(z, new AreaFloor(z));
@@ -124,10 +121,10 @@ class Area extends GameEntity {
       throw new Error('Room does not have coordinates');
     }
 
-    const {x, y, z} = room.coordinates;
+    const { x, y, z } = room.coordinates;
 
     if (!this.map.has(z)) {
-      throw new Error(`That floor doesn't exist`);
+      throw new Error('That floor doesn\'t exist');
     }
 
     const floor = this.map.get(z);
@@ -167,13 +164,13 @@ class Area extends GameEntity {
    * This method is automatically called every N milliseconds where N is defined in the
    * `setInterval` call to `GameState.AreaMAnager.tickAll` in the `ranvier` executable. It, in turn,
    * will fire the `updateTick` event on all its rooms and npcs
-   * 
+   *
    * @param {GameState} state
    * @fires Room#updateTick
    * @fires Npc#updateTick
    */
   update(state) {
-    for(const [id, room] of this.rooms) {
+    for (const [id, room] of this.rooms) {
       /**
        * @see Area#update
        * @event Room#updateTick

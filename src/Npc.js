@@ -1,9 +1,5 @@
-'use strict';
-
 const uuid = require('uuid/v4');
-const Attributes = require('./Attributes');
 const Character = require('./Character');
-const Config = require('./Config');
 const Logger = require('./Logger');
 const Scriptable = require('./Scriptable');
 const CommandQueue = require('./CommandQueue');
@@ -35,13 +31,13 @@ class Npc extends Scriptable(Character) {
     this.defaultEquipment = data.equipment || {};
     this.defaultItems = data.items || [];
     this.description = data.description;
-    this.entityReference = data.entityReference; 
+    this.entityReference = data.entityReference;
     this.id = data.id;
     this.keywords = data.keywords;
     this.quests = data.quests || [];
     this.uuid = data.uuid || uuid();
-    this.min_damage = data.min_damage  || 1;
-    this.max_damage = data.max_damage  || 2;
+    this.min_damage = data.min_damage || 1;
+    this.max_damage = data.max_damage || 2;
     this.commandQueue = new CommandQueue();
   }
 
@@ -53,7 +49,7 @@ class Npc extends Scriptable(Character) {
    * @fires Room#npcEnter
    * @fires Npc#enterRoom
    */
-  moveTo(nextRoom, onMoved = _ => _) {
+  moveTo(nextRoom, onMoved = (_) => _) {
     const prevRoom = this.room;
     if (this.room) {
       /**
@@ -89,7 +85,7 @@ class Npc extends Scriptable(Character) {
 
     this.setupBehaviors(state.MobBehaviorManager);
 
-    for (let defaultItemId of this.defaultItems) {
+    for (const defaultItemId of this.defaultItems) {
       Logger.verbose(`\tDIST: Adding item [${defaultItemId}] to npc [${this.name}]`);
       const newItem = state.ItemFactory.create(this.area, defaultItemId);
       newItem.hydrate(state);
@@ -101,7 +97,7 @@ class Npc extends Scriptable(Character) {
       newItem.emit('spawn');
     }
 
-    for (let [slot, defaultEqId] of Object.entries(this.defaultEquipment)) {
+    for (const [slot, defaultEqId] of Object.entries(this.defaultEquipment)) {
       Logger.verbose(`\tDIST: Equipping item [${defaultEqId}] to npc [${this.name}] in slot [${slot}]`);
       const newItem = state.ItemFactory.create(this.area, defaultEqId);
       newItem.hydrate(state);

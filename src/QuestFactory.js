@@ -1,5 +1,3 @@
-'use strict';
-
 const Quest = require('./Quest');
 const Logger = require('./Logger');
 
@@ -56,7 +54,7 @@ class QuestFactory {
       return true;
     }
 
-    return quest.config.requires.every(requiresRef => tracker.isComplete(requiresRef));
+    return quest.config.requires.every((requiresRef) => tracker.isComplete(requiresRef));
   }
 
   /**
@@ -129,7 +127,7 @@ class QuestFactory {
    * @return {string}
    */
   makeQuestKey(area, id) {
-    return area + ':' + id;
+    return `${area}:${id}`;
   }
 }
 

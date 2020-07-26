@@ -4,4 +4,3 @@
 class QuestRewardManager extends Map {}
 
 module.exports = QuestRewardManager;
-

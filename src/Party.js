@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Representation of an adventuring party
  */

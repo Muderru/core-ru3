@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Representation of an "Attribute" which is any value that has a base amount and depleted/restored
  * safely. Where safely means without being destructive to the base value.
@@ -22,8 +20,8 @@ class Attribute {
    * @param {object} metadata={}
    */
   constructor(name, base, delta = 0, formula = null, metadata = {}) {
-    if (isNaN(base)) { 
-      throw new TypeError(`Base attribute must be a number, got ${base}.`); 
+    if (isNaN(base)) {
+      throw new TypeError(`Base attribute must be a number, got ${base}.`);
     }
     if (isNaN(delta)) {
       throw new TypeError(`Attribute delta must be a number, got ${delta}.`);
@@ -82,8 +80,7 @@ class Attribute {
  * @property {Array<string>} requires Array of attributes required for this formula to run
  * @property {function (...number) : number} formula
  */
-class AttributeFormula
-{
+class AttributeFormula {
   constructor(requires, fn) {
     if (!Array.isArray(requires)) {
       throw new TypeError('requires not an array');
@@ -107,6 +104,6 @@ class AttributeFormula
 }
 
 module.exports = {
-    Attribute,
-    AttributeFormula,
+  Attribute,
+  AttributeFormula,
 };

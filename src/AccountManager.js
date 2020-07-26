@@ -1,5 +1,3 @@
-'use strict';
-
 const Account = require('./Account');
 
 /**
@@ -51,7 +49,7 @@ class AccountManager {
 
     const data = await this.loader.fetch(username);
 
-    let account = new Account(data);
+    const account = new Account(data);
     this.addAccount(account);
 
     return account;

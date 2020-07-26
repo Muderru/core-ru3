@@ -1,5 +1,3 @@
-'use strict';
-
 const CommandType = require('./CommandType');
 const PlayerRoles = require('./PlayerRoles');
 

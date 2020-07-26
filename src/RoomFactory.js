@@ -1,5 +1,3 @@
-'use strict';
-
 const Room = require('./Room');
 const EntityFactory = require('./EntityFactory');
 

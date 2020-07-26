@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Self-managing list of effects for a target
  * @property {Set}    effects
@@ -46,9 +44,7 @@ class EffectList {
    * @return {Effect}
    */
   getByType(type) {
-    return [...this.effects].find(effect => {
-      return effect.config.type === type;
-    });
+    return [...this.effects].find((effect) => effect.config.type === type);
   }
 
   /**
@@ -145,7 +141,7 @@ class EffectList {
    */
   remove(effect) {
     if (!this.effects.has(effect)) {
-      throw new ReferenceError("Trying to remove effect that was never added");
+      throw new ReferenceError('Trying to remove effect that was never added');
     }
 
     effect.deactivate();
@@ -183,7 +179,7 @@ class EffectList {
   evaluateAttribute(attr) {
     this.validateEffects();
 
-    let attrName  = attr.name;
+    const attrName = attr.name;
     let attrValue = attr.base || 0;
 
     for (const effect of this.effects) {
@@ -249,7 +245,7 @@ class EffectList {
 
   serialize() {
     this.validateEffects();
-    let serialized = [];
+    const serialized = [];
     for (const effect of this.effects) {
       if (!effect.config.persists) {
         continue;
@@ -262,7 +258,7 @@ class EffectList {
   }
 
   hydrate(state) {
-    const effects = this.effects;
+    const { effects } = this;
     this.effects = new Set();
     for (const newEffect of effects) {
       const effect = state.EffectFactory.create(newEffect.id);

@@ -1,5 +1,3 @@
-'use strict';
-
 const ChannelAudience = require('./ChannelAudience');
 
 /**
@@ -9,7 +7,7 @@ const ChannelAudience = require('./ChannelAudience');
  */
 class WorldAudience extends ChannelAudience {
   getBroadcastTargets() {
-    return this.state.PlayerManager.filter(player => player !== this.sender);
+    return this.state.PlayerManager.filter((player) => player !== this.sender);
   }
 }
 

@@ -1,5 +1,3 @@
-'use strict';
-
 const EventEmitter = require('events');
 const Data = require('./Data');
 const Player = require('./Player');
@@ -110,7 +108,7 @@ class PlayerManager extends EventEmitter {
     const data = await this.loader.fetch(username);
     data.name = username;
 
-    let player = new Player(data);
+    const player = new Player(data);
     player.account = account;
 
     this.events.attach(player);
@@ -157,7 +155,7 @@ class PlayerManager extends EventEmitter {
    * @fires Player#saved
    */
   async saveAll() {
-    for (const [ name, player ] of this.players.entries()) {
+    for (const [name, player] of this.players.entries()) {
       await this.save(player);
     }
   }
@@ -166,7 +164,7 @@ class PlayerManager extends EventEmitter {
    * @fires Player#updateTick
    */
   tickAll() {
-    for (const [ name, player ] of this.players.entries()) {
+    for (const [name, player] of this.players.entries()) {
       /**
        * @event Player#updateTick
        */

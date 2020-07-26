@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Keeps track of player quest progress
  *
@@ -26,7 +24,7 @@ class QuestTracker {
    * @param {...*}   args
    */
   emit(event, ...args) {
-    for (const [ qid, quest ] of this.activeQuests) {
+    for (const [qid, quest] of this.activeQuests) {
       quest.emit(event, ...args);
     }
   }
@@ -61,7 +59,7 @@ class QuestTracker {
 
     this.completedQuests.set(qid, {
       started: this.activeQuests.get(qid).started,
-      completedAt: (new Date()).toJSON()
+      completedAt: (new Date()).toJSON(),
     });
 
     this.activeQuests.delete(qid);
@@ -101,7 +99,7 @@ class QuestTracker {
   serialize() {
     return {
       completed: [...this.completedQuests],
-      active: [...this.activeQuests].map(([qid, quest]) =>  [qid, quest.serialize()]),
+      active: [...this.activeQuests].map(([qid, quest]) => [qid, quest.serialize()]),
     };
   }
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Keeps track of all the individual mobs in the game
  */
@@ -21,12 +19,12 @@ class MobManager {
    */
   removeMob(mob) {
     mob.effects.clear();
-    const sourceRoom = mob.sourceRoom;
+    const { sourceRoom } = mob;
     if (sourceRoom) {
       sourceRoom.area.removeNpc(mob);
       sourceRoom.removeNpc(mob, true);
     }
-    const room = mob.room;
+    const { room } = mob;
     if (room && room !== sourceRoom) {
       room.area.removeNpc(mob);
       room.removeNpc(mob);

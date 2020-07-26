@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @property {string} attribute Attribute the damage is going to apply to
  * @property {number} amount Initial amount of damage to be done
@@ -21,7 +19,7 @@ class Damage {
     }
 
     if (typeof attribute !== 'string') {
-      throw new TypeError("Damage attribute name must be a string");
+      throw new TypeError('Damage attribute name must be a string');
     }
 
     this.attacker = attacker;
@@ -37,7 +35,7 @@ class Damage {
    * @return {number} Final damage amount
    */
   evaluate(target) {
-    let amount = this.amount;
+    let { amount } = this;
 
     if (this.attacker) {
       amount = this.attacker.evaluateOutgoingDamage(this, amount, target);
@@ -65,7 +63,7 @@ class Damage {
        */
       this.attacker.emit('hit', this, target, finalAmount);
     }
-      /**
+    /**
        * @event Character#damaged
        * @param {Damage} damage
        * @param {Number} finalAmount

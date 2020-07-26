@@ -1,5 +1,3 @@
-'use strict';
-
 const sty = require('sty');
 
 /**
@@ -12,7 +10,7 @@ class EventUtil {
    * @return {function (string)}
    */
   static genWrite(socket) {
-    return string => socket.write(sty.parse(string));
+    return (string) => socket.write(sty.parse(string));
   }
 
   /**
@@ -21,7 +19,7 @@ class EventUtil {
    * @return {function (string)}
    */
   static genSay(socket) {
-    return string => socket.write(sty.parse(string + '\r\n'));
+    return (string) => socket.write(sty.parse(`${string}\r\n`));
   }
 }
 

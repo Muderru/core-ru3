@@ -1,5 +1,3 @@
-'use strict';
-
 /** @module Util */
 module.exports = {
   /**
@@ -9,5 +7,5 @@ module.exports = {
    */
   isIterable(obj) {
     return obj && typeof obj[Symbol.iterator] === 'function';
-  }
+  },
 };

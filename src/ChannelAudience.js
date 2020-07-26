@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Classes representing various channel audiences
  *

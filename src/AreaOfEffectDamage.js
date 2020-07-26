@@ -1,5 +1,3 @@
-'use strict';
-
 const Damage = require('./Damage');
 const Room = require('./Room');
 const Character = require('./Character');
@@ -9,8 +7,7 @@ const Character = require('./Character');
  * default it will target all npcs in the room. To customize this behavior you
  * can extend this class and override the `getValidTargets` method
  */
-class AreaOfEffectDamage extends Damage
-{
+class AreaOfEffectDamage extends Damage {
   /**
    * @param {Room|Character} target
    * @throws RangeError
@@ -47,7 +44,7 @@ class AreaOfEffectDamage extends Damage
    */
   getValidTargets(room) {
     const targets = [...room.npcs];
-    return targets.filter(t => t.hasAttribute(this.attribute));
+    return targets.filter((t) => t.hasAttribute(this.attribute));
   }
 }
 

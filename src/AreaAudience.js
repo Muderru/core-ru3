@@ -1,5 +1,3 @@
-'use strict';
-
 const ChannelAudience = require('./ChannelAudience');
 
 /**
@@ -14,7 +12,7 @@ class AreaAudience extends ChannelAudience {
     }
 
     const { area } = this.sender.room;
-    return area.getBroadcastTargets().filter(target => target !== this.sender);
+    return area.getBroadcastTargets().filter((target) => target !== this.sender);
   }
 }
 

@@ -1,8 +1,3 @@
-'use strict';
-
-/** @typedef {{ execute: function (), label: string, lag: number= }} */
-var CommandExecutable;
-
 /**
  * Keeps track of the queue off commands to execute for a player
  */
@@ -28,7 +23,7 @@ class CommandQueue {
    * @param {number} lag Amount of lag to apply to the queue after the command is run
    */
   enqueue(executable, lag) {
-    let newIndex = this.commands.push(Object.assign(executable, { lag })) - 1;
+    const newIndex = this.commands.push(Object.assign(executable, { lag })) - 1;
     return newIndex;
   }
 
@@ -113,7 +108,7 @@ class CommandQueue {
    */
   getMsTilRun(commandIndex) {
     if (!this.commands[commandIndex]) {
-      throw new RangeError("Invalid command index");
+      throw new RangeError('Invalid command index');
     }
 
     let lagTotal = this.msTilNextRun;

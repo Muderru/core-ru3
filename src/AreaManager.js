@@ -1,5 +1,3 @@
-'use strict';
-
 const BehaviorManager = require('./BehaviorManager');
 const Area = require('./Area');
 const Room = require('./Room');
@@ -58,7 +56,7 @@ class AreaManager {
    * @return string
    */
   getInstanceRef(areaName, instanceId = null) {
-    return areaName + (instanceId ? '__' + instanceId : '');
+    return areaName + (instanceId ? `__${instanceId}` : '');
   }
 
   /**
@@ -67,7 +65,7 @@ class AreaManager {
    * @fires Area#updateTick
    */
   tickAll(state) {
-    for (const [ name, area ] of this.areas) {
+    for (const [name, area] of this.areas) {
       /**
        * @see Area#update
        * @event Area#updateTick
@@ -88,7 +86,7 @@ class AreaManager {
     }
 
     this._placeholder = new Area(null, 'placeholder', {
-      title: 'Placeholder'
+      title: 'Placeholder',
     });
 
     const placeholderRoom = new Room(this._placeholder, {

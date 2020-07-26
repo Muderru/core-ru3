@@ -1,5 +1,3 @@
-'use strict';
-
 const ItemType = require('./ItemType');
 
 /**
@@ -24,7 +22,7 @@ class ItemManager {
     }
 
     if (item.type === ItemType.CONTAINER && item.inventory) {
-      item.inventory.forEach(childItem => this.remove(childItem));
+      item.inventory.forEach((childItem) => this.remove(childItem));
     }
 
     item.__pruned = true;

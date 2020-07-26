@@ -1,5 +1,3 @@
-'use strict';
-
 const { Attribute, AttributeFormula } = require('./Attribute');
 
 /**
@@ -63,7 +61,7 @@ class AttributeFactory {
    * @throws Error
    */
   validateAttributes() {
-    const references = [...this.attributes].reduce((acc, [ attrName, { formula } ]) => {
+    const references = [...this.attributes].reduce((acc, [attrName, { formula }]) => {
       if (!formula) {
         return acc;
       }
@@ -112,4 +110,3 @@ class AttributeFactory {
 }
 
 module.exports = AttributeFactory;
-

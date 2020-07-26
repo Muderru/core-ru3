@@ -1,11 +1,7 @@
-'use strict';
-
 const ansi = require('sty');
+
 ansi.enable(); // force ansi on even when there isn't a tty for the server
 const wrap = require('wrap-ansi');
-
-/** @typedef {{getBroadcastTargets: function(): Array}} */
-var Broadcastable;
 
 /**
  * Class used for sending text to the player. All output to the player should happen through this
@@ -65,10 +61,10 @@ class Broadcast {
     excludes = [].concat(excludes);
 
     const targets = source.getBroadcastTargets()
-      .filter(target => !excludes.includes(target));
+      .filter((target) => !excludes.includes(target));
 
     const newSource = {
-      getBroadcastTargets: () => targets
+      getBroadcastTargets: () => targets,
     };
 
     Broadcast.at(newSource, message, wrapWidth, useColor, formatter);
@@ -92,9 +88,7 @@ class Broadcast {
    * @see {@link Broadcast#at}
    */
   static sayAt(source, message, wrapWidth, useColor, formatter) {
-    Broadcast.at(source, message, wrapWidth, useColor, (target, message) => {
-      return (formatter ? formatter(target, message) : message ) + '\r\n';
-    });
+    Broadcast.at(source, message, wrapWidth, useColor, (target, message) => `${formatter ? formatter(target, message) : message}\r\n`);
   }
 
   /**
@@ -102,9 +96,7 @@ class Broadcast {
    * @see {@link Broadcast#atExcept}
    */
   static sayAtExcept(source, message, excludes, wrapWidth, useColor, formatter) {
-    Broadcast.atExcept(source, message, excludes, wrapWidth, useColor, (target, message) => {
-      return (formatter ? formatter(target, message) : message ) + '\r\n';
-    });
+    Broadcast.atExcept(source, message, excludes, wrapWidth, useColor, (target, message) => `${formatter ? formatter(target, message) : message}\r\n`);
   }
 
   /**
@@ -124,8 +116,8 @@ class Broadcast {
    */
   static prompt(player, extra, wrapWidth, useColor) {
     player.socket._prompted = false;
-    Broadcast.at(player, '\r\n' + player.interpolatePrompt(player.prompt, extra) + ' ', wrapWidth, useColor);
-    let needsNewline = player.extraPrompts.size > 0;
+    Broadcast.at(player, `\r\n${player.interpolatePrompt(player.prompt, extra)} `, wrapWidth, useColor);
+    const needsNewline = player.extraPrompts.size > 0;
     if (needsNewline) {
       Broadcast.sayAt(player);
     }
@@ -157,22 +149,22 @@ class Broadcast {
    * @param {string} delimiters Characters to wrap the bar in
    * @return {string}
    */
-  static progress(width, percent, color, barChar = "#", fillChar = " ", delimiters = "()") {
+  static progress(width, percent, color, barChar = '#', fillChar = ' ', delimiters = '()') {
     percent = Math.max(0, percent);
     width -= 3; // account for delimiters and tip of bar
     if (percent === 100) {
-        width++; // 100% bar doesn't have a second right delimiter
+      width++; // 100% bar doesn't have a second right delimiter
     }
     barChar = barChar[0];
     fillChar = fillChar[0];
-    const [ leftDelim, rightDelim ] = delimiters;
+    const [leftDelim, rightDelim] = delimiters;
     const openColor = `<${color}>`;
     const closeColor = `</${color}>`;
-    let buf = openColor + leftDelim + "<bold>";
+    let buf = `${openColor + leftDelim}<bold>`;
     const widthPercent = Math.round((percent / 100) * width);
     buf += Broadcast.line(widthPercent, barChar) + (percent === 100 ? '' : rightDelim);
     buf += Broadcast.line(width - widthPercent, fillChar);
-    buf += "</bold>" + rightDelim + closeColor;
+    buf += `</bold>${rightDelim}${closeColor}`;
     return buf;
   }
 
@@ -184,7 +176,7 @@ class Broadcast {
    * @param {?string} fillChar Character to pad with, defaults to ' '
    * @return {string}
    */
-  static center(width, message, color, fillChar = " ") {
+  static center(width, message, color, fillChar = ' ') {
     const padWidth = width / 2 - message.length / 2;
     let openColor = '';
     let closeColor = '';
@@ -194,11 +186,11 @@ class Broadcast {
     }
 
     return (
-      openColor +
-      Broadcast.line(Math.floor(padWidth), fillChar) +
-      message +
-      Broadcast.line(Math.ceil(padWidth), fillChar) +
-      closeColor
+      openColor
+      + Broadcast.line(Math.floor(padWidth), fillChar)
+      + message
+      + Broadcast.line(Math.ceil(padWidth), fillChar)
+      + closeColor
     );
   }
 
@@ -209,7 +201,7 @@ class Broadcast {
    * @param {?string} color
    * @return {string}
    */
-  static line(width, fillChar = "-", color = null) {
+  static line(width, fillChar = '-', color = null) {
     let openColor = '';
     let closeColor = '';
     if (color) {
@@ -238,7 +230,7 @@ class Broadcast {
   static indent(message, indent) {
     message = Broadcast._fixNewlines(message);
     const padding = Broadcast.line(indent, ' ');
-    return padding + message.replace(/\r\n/g, '\r\n' + padding);
+    return padding + message.replace(/\r\n/g, `\r\n${padding}`);
   }
 
   /**

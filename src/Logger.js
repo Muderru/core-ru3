@@ -1,11 +1,9 @@
-'use strict';
-
 const winston = require('winston');
 
 // Reset Console transport and configure it to include ISO timestamp.
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {
-  'timestamp':true
+  timestamp: true,
 });
 
 const logExt = '.log';
@@ -14,7 +12,6 @@ const logExt = '.log';
  * Wrapper around Winston
  */
 class Logger {
-
   static getLevel() {
     return winston.level || process.env.LOG_LEVEL || 'debug';
   }
@@ -53,12 +50,12 @@ class Logger {
     winston.log('verbose', ...messages);
   }
 
-  //TODO: Be able to set and deactivate file logging via a server command.
+  // TODO: Be able to set and deactivate file logging via a server command.
   static setFileLogging(path) {
     if (!path.endsWith(logExt)) {
       path += logExt;
     }
-    console.log("Adding file logging at " + path);
+    console.log(`Adding file logging at ${path}`);
     winston.add(winston.transports.File, { filename: path, timestamp: true });
   }
 
@@ -67,12 +64,9 @@ class Logger {
   }
 
   static enablePrettyErrors() {
-    const longjohn = require('longjohn');
     const pe = require('pretty-error').start();
     pe.skipNodeFiles(); // Ignore native node files in stacktrace.
   }
-
 }
 
 module.exports = Logger;
-

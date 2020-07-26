@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Contains all active in game commands
  */
@@ -24,7 +22,7 @@ class CommandManager {
   add(command) {
     this.commands.set(command.name, command);
     if (command.aliases) {
-      command.aliases.forEach(alias => this.commands.set(alias, command));
+      command.aliases.forEach((alias) => this.commands.set(alias, command));
     }
   }
 
@@ -42,7 +40,7 @@ class CommandManager {
    * @return {Command}
    */
   find(search, returnAlias) {
-    for (const [ name, command ] of this.commands.entries()) {
+    for (const [name, command] of this.commands.entries()) {
       if (name.indexOf(search) === 0) {
         return returnAlias ? { command, alias: name } : command;
       }

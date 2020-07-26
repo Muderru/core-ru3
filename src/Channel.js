@@ -1,5 +1,3 @@
-'use strict';
-
 const Broadcast = require('./Broadcast');
 const WorldAudience = require('./WorldAudience');
 const PrivateAudience = require('./PrivateAudience');
@@ -25,7 +23,7 @@ class Channel {
    */
   constructor(config) {
     if (!config.name) {
-      throw new Error("Channels must have a name to be usable.");
+      throw new Error('Channels must have a name to be usable.');
     }
     if (!config.audience) {
       throw new Error(`Channel ${config.name} is missing a valid audience.`);
@@ -50,7 +48,6 @@ class Channel {
    * @fires GameEntity#channelReceive
    */
   send(state, sender, message) {
-
     // If they don't include a message, explain how to use the channel.
     if (!message.length) {
       throw new NoMessageError();
@@ -81,9 +78,7 @@ class Channel {
     }
 
     // send to audience targets
-    Broadcast.sayAtFormatted(this.audience, message, (target, message) => {
-      return this.formatter.target(sender, target, message, this.colorify.bind(this));
-    });
+    Broadcast.sayAtFormatted(this.audience, message, (target, message) => this.formatter.target(sender, target, message, this.colorify.bind(this)));
 
     // strip color tags
     const rawMessage = message.replace(/\<\/?\w+?\>/gm, '');
@@ -104,7 +99,7 @@ class Channel {
 
   describeSelf(sender) {
     Broadcast.sayAt(sender, `\r\nКанал: ${this.name}`);
-    Broadcast.sayAt(sender, 'Синтаксис: ' + this.getUsage());
+    Broadcast.sayAt(sender, `Синтаксис: ${this.getUsage()}`);
     if (this.description) {
       Broadcast.sayAt(sender, this.description);
     }
@@ -150,8 +145,8 @@ class Channel {
 
     const colors = Array.isArray(this.color) ? this.color : [this.color];
 
-    const open = colors.map(color => `<${color}>`).join('');
-    const close = colors.reverse().map(color => `</${color}>`).join('');
+    const open = colors.map((color) => `<${color}>`).join('');
+    const close = colors.reverse().map((color) => `</${color}>`).join('');
 
     return open + message + close;
   }

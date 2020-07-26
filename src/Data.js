@@ -1,5 +1,3 @@
-'use strict';
-
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
@@ -53,10 +51,10 @@ class Data {
     const serializers = {
       '.yml': yaml.safeDump,
       '.yaml': yaml.safeDump,
-      '.json': function(data) {
-        //Make it prettttty
+      '.json': function (data) {
+        // Make it prettttty
         return JSON.stringify(data, null, 2);
-      }
+      },
     };
 
     const ext = path.extname(filepath);
@@ -115,10 +113,10 @@ class Data {
   static getDataFilePath(type, id) {
     switch (type) {
       case 'player': {
-        return dataPath + `player/${id}.json`;
+        return `${dataPath}player/${id}.json`;
       }
       case 'account': {
-        return dataPath + `account/${id}.json`;
+        return `${dataPath}account/${id}.json`;
       }
     }
   }
@@ -139,7 +137,7 @@ class Data {
    * @return string
    */
   static loadMotd() {
-    const motd = fs.readFileSync(dataPath + 'motd').toString('utf8');
+    const motd = fs.readFileSync(`${dataPath}motd`).toString('utf8');
     return motd;
   }
 }

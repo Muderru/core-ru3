@@ -1,5 +1,3 @@
-'use strict';
-
 const SkillFlag = require('./SkillFlag');
 
 /**
@@ -24,7 +22,7 @@ class SkillManager {
   add(skill) {
     this.skills.set(skill.id, skill);
     if (skill.aliases) {
-      skill.aliases.forEach(alias => this.skills.set(alias, skill));
+      skill.aliases.forEach((alias) => this.skills.set(alias, skill));
     }
   }
 
@@ -42,7 +40,7 @@ class SkillManager {
    * @return {Skill}
    */
   find(search, includePassive = false) {
-    for (const [ id, skill ] of this.skills) {
+    for (const [id, skill] of this.skills) {
       if (!includePassive && skill.flags.includes(SkillFlag.PASSIVE)) {
         continue;
       }

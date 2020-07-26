@@ -1,6 +1,3 @@
-'use strict';
-
-
 /**
  * @module PlayerRoles
  * @enum {number}
@@ -8,5 +5,5 @@
 module.exports = {
   ADMIN: 2,
   BUILDER: 1,
-  PLAYER: 0
+  PLAYER: 0,
 };

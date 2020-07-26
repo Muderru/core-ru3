@@ -1,14 +1,9 @@
-'use strict';
-
 const Config = require('./Config');
 const EffectableEntity = require('./EffectableEntity');
 const { EquipSlotTakenError, EquipAlreadyEquippedError } = require('./EquipErrors');
-const EventEmitter = require('events');
-const Heal = require('./Heal');
 const Metadatable = require('./Metadatable');
 const { Inventory, InventoryFullError } = require('./Inventory');
 const Room = require('./Room');
-
 
 /**
  * The Character class acts as the base for both NPCs and Players.
@@ -157,7 +152,6 @@ class Character extends Metadatable(EffectableEntity) {
        */
       this.emit('combatEnd');
     }
-
   }
 
   /**
@@ -280,7 +274,7 @@ class Character extends Metadatable(EffectableEntity) {
     if (!this.inventory) {
       return false;
     }
-    for (const [ uuid, item ] of this.inventory) {
+    for (const [uuid, item] of this.inventory) {
       if (item.entityReference === itemReference) {
         return item;
       }

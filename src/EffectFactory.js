@@ -1,10 +1,5 @@
-'use strict';
-
 const EventManager = require('./EventManager');
 const Effect = require('./Effect');
-
-/** @typedef {{config: Object<string,*>, listeners: Object<String,function (...*)>}} */
-var EffectConfig;
 
 /**
  * @property {Map} effects
@@ -24,7 +19,7 @@ class EffectFactory {
       return;
     }
 
-    let definition = Object.assign({}, config);
+    const definition = { ...config };
     delete definition.listeners;
     let listeners = config.listeners || {};
     if (typeof listeners === 'function') {
@@ -67,7 +62,7 @@ class EffectFactory {
     if (!entry || !entry.definition) {
       throw new Error(`No valid entry definition found for effect ${id}.`);
     }
-    let def = Object.assign({}, entry.definition);
+    const def = { ...entry.definition };
     def.config = Object.assign(def.config, config);
     def.state = Object.assign(def.state || {}, state);
     const effect = new Effect(id, def);

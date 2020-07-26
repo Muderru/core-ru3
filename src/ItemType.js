@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @module ItemType
  * @enum {number}

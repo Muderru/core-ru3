@@ -1,5 +1,3 @@
-'use strict';
-
 const ChannelAudience = require('./ChannelAudience');
 
 class RoleAudience extends ChannelAudience {
@@ -12,7 +10,7 @@ class RoleAudience extends ChannelAudience {
   }
 
   getBroadcastTargets() {
-    return this.state.PlayerManager.filter(player => player.role >= this.minRole && player !== this.sender);
+    return this.state.PlayerManager.filter((player) => player.role >= this.minRole && player !== this.sender);
   }
 }
 

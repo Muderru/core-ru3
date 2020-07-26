@@ -1,5 +1,3 @@
-'use strict';
-
 const EntityLoader = require('./EntityLoader');
 
 /**
@@ -31,4 +29,3 @@ class EntityLoaderRegistry extends Map {
 }
 
 module.exports = EntityLoaderRegistry;
-

@@ -1,5 +1,3 @@
-'use strict';
-
 const { isIterable } = require('./Util');
 
 /**
@@ -38,7 +36,7 @@ class EventManager {
    * @param {Object} config
    */
   attach(emitter, config) {
-    for (const [ event, listeners ] of this.events) {
+    for (const [event, listeners] of this.events) {
       for (const listener of listeners) {
         if (config) {
           emitter.on(event, listener.bind(emitter, config));

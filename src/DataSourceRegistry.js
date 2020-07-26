@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Holds instances of configured DataSources
  * @type {Map<string, DataSource>}
@@ -26,7 +24,7 @@ class DataSourceRegistry extends Map {
 
       // relative path to require
       if (settings.require[0] === '.') {
-        loader = require(rootPath + '/' + settings.require);
+        loader = require(`${rootPath}/${settings.require}`);
       } else if (!settings.require.includes('.')) {
         loader = require(settings.require);
       } else {

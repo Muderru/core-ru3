@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Representation of a `Character` or container `Item` inventory
  * @extends Map
@@ -11,10 +9,11 @@ class Inventory extends Map {
    * @param {number} init.max Max number of items this inventory can hold
    */
   constructor(init) {
-    init = Object.assign({
+    init = {
       items: [],
-      max: Infinity
-    }, init);
+      max: Infinity,
+      ...init,
+    };
 
     super(init.items);
     this.maxSize = init.max;
@@ -62,9 +61,9 @@ class Inventory extends Map {
     // Item is imported here to prevent circular dependency with Item having an Inventory
     const Item = require('./Item');
 
-    let data = {
+    const data = {
       items: [],
-      max: this.maxSize
+      max: this.maxSize,
     };
 
     for (const [uuid, item] of this) {
@@ -98,7 +97,7 @@ class Inventory extends Map {
       }
 
       const area = state.AreaManager.getAreaByReference(def.entityReference);
-      let newItem = state.ItemFactory.create(area, def.entityReference);
+      const newItem = state.ItemFactory.create(area, def.entityReference);
       newItem.uuid = uuid;
       newItem.carriedBy = carriedBy;
       newItem.initializeInventory(def.inventory);

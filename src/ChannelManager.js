@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Contains registered channels
  *
@@ -24,7 +22,7 @@ class ChannelManager {
   add(channel) {
     this.channels.set(channel.name, channel);
     if (channel.aliases) {
-      channel.aliases.forEach(alias => this.channels.set(alias, channel));
+      channel.aliases.forEach((alias) => this.channels.set(alias, channel));
     }
   }
 
@@ -40,7 +38,7 @@ class ChannelManager {
    * @return {Channel}
    */
   find(search) {
-    for (const [ name, channel ] of this.channels.entries()) {
+    for (const [name, channel] of this.channels.entries()) {
       if (name.indexOf(search) === 0) {
         return channel;
       }

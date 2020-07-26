@@ -1,5 +1,3 @@
-'use strict';
-
 const Damage = require('./Damage');
 
 /**

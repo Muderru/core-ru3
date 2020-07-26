@@ -1,6 +1,3 @@
-'use strict';
-
-const Npc = require('./Npc');
 const BehaviorManager = require('./BehaviorManager');
 
 /**
@@ -19,7 +16,7 @@ class EntityFactory {
    * @return {string}
    */
   createEntityRef(area, id) {
-    return area + ':' + id;
+    return `${area}:${id}`;
   }
 
   /**
@@ -63,7 +60,7 @@ class EntityFactory {
   createByType(area, entityRef, Type) {
     const definition = this.getDefinition(entityRef);
     if (!definition) {
-      throw new Error('No Entity definition found for ' + entityRef);
+      throw new Error(`No Entity definition found for ${entityRef}`);
     }
     const entity = new Type(area, definition);
 
@@ -75,7 +72,7 @@ class EntityFactory {
   }
 
   create() {
-    throw new Error("No type specified for Entity.create");
+    throw new Error('No type specified for Entity.create');
   }
 
   /**

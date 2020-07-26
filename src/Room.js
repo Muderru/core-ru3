@@ -1,5 +1,3 @@
-'use strict';
-
 const GameEntity = require('./GameEntity');
 const Logger = require('./Logger');
 
@@ -34,7 +32,7 @@ class Room extends GameEntity {
     this.def = def;
     this.area = area;
     this.defaultItems = def.items || [];
-    this.defaultNpcs  = def.npcs || [];
+    this.defaultNpcs = def.npcs || [];
     this.metadata = def.metadata || {};
     this.script = def.script;
     this.behaviors = new Map(Object.entries(def.behaviors || {}));
@@ -44,7 +42,7 @@ class Room extends GameEntity {
       z: def.coordinates[2],
     } : null;
     this.description = def.description;
-    this.entityReference = this.area.name + ':' + def.id;
+    this.entityReference = `${this.area.name}:${def.id}`;
     this.exits = def.exits || [];
     this.id = def.id;
     this.light = def.light || 50;
@@ -79,7 +77,7 @@ class Room extends GameEntity {
       'playerEnter',
       'playerLeave',
       'npcEnter',
-      'npcLeave'
+      'npcLeave',
     ];
 
     if (proxiedEvents.includes(eventName)) {
@@ -115,7 +113,7 @@ class Room extends GameEntity {
 
   /**
    * @param {Npc} npc
-   * @param {boolean} removeSpawn 
+   * @param {boolean} removeSpawn
    */
   removeNpc(npc, removeSpawn = false) {
     this.npcs.delete(npc);
@@ -148,7 +146,7 @@ class Room extends GameEntity {
    * @return {Array<{ id: string, direction: string, inferred: boolean, room: Room= }>}
    */
   getExits() {
-    const exits = JSON.parse(JSON.stringify(this.exits)).map(exit => {
+    const exits = JSON.parse(JSON.stringify(this.exits)).map((exit) => {
       exit.inferred = false;
       return exit;
     });
@@ -175,10 +173,10 @@ class Room extends GameEntity {
       const room = this.area.getRoomAtCoordinates(
         this.coordinates.x + x,
         this.coordinates.y + y,
-        this.coordinates.z + z
+        this.coordinates.z + z,
       );
 
-      if (room && !exits.find(ex => ex.direction === adj.dir)) {
+      if (room && !exits.find((ex) => ex.direction === adj.dir)) {
         exits.push({ roomId: room.entityReference, direction: adj.dir, inferred: true });
       }
     }
@@ -198,7 +196,7 @@ class Room extends GameEntity {
       return false;
     }
 
-    const roomExit = exits.find(ex => ex.direction.indexOf(exitName) === 0);
+    const roomExit = exits.find((ex) => ex.direction.indexOf(exitName) === 0);
 
     return roomExit || false;
   }
@@ -215,7 +213,7 @@ class Room extends GameEntity {
       return false;
     }
 
-    const roomExit = exits.find(ex => ex.roomId === nextRoom.entityReference);
+    const roomExit = exits.find((ex) => ex.roomId === nextRoom.entityReference);
 
     return roomExit || false;
   }
@@ -338,17 +336,17 @@ class Room extends GameEntity {
     this.area.addNpc(newNpc);
     this.addNpc(newNpc);
     this.spawnedNpcs.add(newNpc);
-    const attributes = [ 'strength', 'agility', 'intellect', 'stamina', 'armor', 'critical', 
-          'cutting_resistance', 'crushing_resistance', 'piercing_resistance', 'fire_resistance', 
-          'cold_resistance', 'lightning_resistance', 'earth_resistance', 'acid_resistance', 
-          'chaos_resistance', 'ether_resistance', 'cutting_damage', 'crushing_damage', 
-          'piercing_damage', 'fire_damage', 'cold_damage', 'lightning_damage', 'earth_damage', 
-          'acid_damage', 'chaos_damage', 'ether_damage', 'light', 'invisibility', 'detect_invisibility', 
-          'hide', 'detect_hide', 'freedom', 'health_regeneration', 'mana_regeneration', 'health_percent', 
-          'mana_percent', 'armor_percent', 'critical_percent', 'critical_damage_percent', 'effect_duration_percent',
-          'critical_damage_reduction_percent', 'skill_damage_percent', 'spell_damage_percent', 
-          'out_heal_percent', 'in_heal_percent', 'dot_damage_percent', 'dot_duration_percent', 
-          'dot_duration_reduction_percent', 'unfreedom_duration_reduction_percent', 'swift' ];
+    const attributes = ['strength', 'agility', 'intellect', 'stamina', 'armor', 'critical',
+      'cutting_resistance', 'crushing_resistance', 'piercing_resistance', 'fire_resistance',
+      'cold_resistance', 'lightning_resistance', 'earth_resistance', 'acid_resistance',
+      'chaos_resistance', 'ether_resistance', 'cutting_damage', 'crushing_damage',
+      'piercing_damage', 'fire_damage', 'cold_damage', 'lightning_damage', 'earth_damage',
+      'acid_damage', 'chaos_damage', 'ether_damage', 'light', 'invisibility', 'detect_invisibility',
+      'hide', 'detect_hide', 'freedom', 'health_regeneration', 'mana_regeneration', 'health_percent',
+      'mana_percent', 'armor_percent', 'critical_percent', 'critical_damage_percent', 'effect_duration_percent',
+      'critical_damage_reduction_percent', 'skill_damage_percent', 'spell_damage_percent',
+      'out_heal_percent', 'in_heal_percent', 'dot_damage_percent', 'dot_duration_percent',
+      'dot_duration_reduction_percent', 'unfreedom_duration_reduction_percent', 'swift'];
     for (const attribute of attributes) {
       if (!newNpc.hasAttribute(attribute)) {
         newNpc.addAttribute(state.AttributeFactory.create(attribute, 0));
@@ -379,7 +377,7 @@ class Room extends GameEntity {
     // persist through reboot unless they're stored on a player.
     // If you would like to change that functionality this is the place
 
-    this.defaultItems.forEach(defaultItem => {
+    this.defaultItems.forEach((defaultItem) => {
       if (typeof defaultItem === 'string') {
         defaultItem = { id: defaultItem };
       }
@@ -387,7 +385,7 @@ class Room extends GameEntity {
       this.spawnItem(state, defaultItem.id);
     });
 
-    this.defaultNpcs.forEach(defaultNpc => {
+    this.defaultNpcs.forEach((defaultNpc) => {
       if (typeof defaultNpc === 'string') {
         defaultNpc = { id: defaultNpc };
       }

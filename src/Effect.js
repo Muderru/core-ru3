@@ -1,9 +1,4 @@
-'use strict';
-
 const EventEmitter = require('events');
-
- /** @typedef EffectModifiers {{attributes: !Object<string,function>}} */
-var EffectModifiers;
 
 /**
  * See the {@link http://ranviermud.com/extending/effects/|Effect guide} for usage.
@@ -40,7 +35,7 @@ class Effect extends EventEmitter {
 
     this.id = id;
     this.flags = def.flags || [];
-    this.config = Object.assign({
+    this.config = {
       autoActivate: true,
       description: '',
       duration: Infinity,
@@ -54,20 +49,22 @@ class Effect extends EventEmitter {
       tickInterval: false,
       type: 'undef',
       unique: true,
-    }, def.config);
+      ...def.config,
+    };
 
     this.startedAt = 0;
     this.paused = 0;
-    this.modifiers = Object.assign({
+    this.modifiers = {
       attributes: {},
       properties: {},
       incomingDamage: (damage, current) => current,
       outgoingDamage: (damage, current) => current,
-    }, def.modifiers);
+      ...def.modifiers,
+    };
 
     // internal state saved across player load e.g., stacks, amount of damage shield remaining, whatever
     // Default state can be found in config.state
-    this.state = Object.assign({}, def.state);
+    this.state = { ...def.state };
 
     if (this.config.maxStacks) {
       this.state.stacks = 1;
@@ -127,7 +124,7 @@ class Effect extends EventEmitter {
    * Elapsed time in milliseconds since event was activated
    * @type {number}
    */
-  get elapsed () {
+  get elapsed() {
     if (!this.startedAt) {
       return null;
     }
@@ -222,11 +219,9 @@ class Effect extends EventEmitter {
    * @return {number} attribute value modified by effect
    */
   modifyAttribute(attrName, currentValue) {
-    let modifier = _ => _;
+    let modifier = (_) => _;
     if (typeof this.modifiers.attributes === 'function') {
-      modifier = (current) => {
-        return this.modifiers.attributes.bind(this)(attrName, current);
-      };
+      modifier = (current) => this.modifiers.attributes.bind(this)(attrName, current);
     } else if (attrName in this.modifiers.attributes) {
       modifier = this.modifiers.attributes[attrName];
     }
@@ -241,11 +236,9 @@ class Effect extends EventEmitter {
    * @return {*} property value modified by effect
    */
   modifyProperty(propertyName, currentValue) {
-    let modifier = _ => _;
+    let modifier = (_) => _;
     if (typeof this.modifiers.properties === 'function') {
-      modifier = (current) => {
-        return this.modifiers.properties.bind(this)(propertyName, current);
-      };
+      modifier = (current) => this.modifiers.properties.bind(this)(propertyName, current);
     } else if (propertyName in this.modifiers.properties) {
       modifier = this.modifiers.properties[propertyName];
     }
@@ -277,12 +270,12 @@ class Effect extends EventEmitter {
    * @return {Object}
    */
   serialize() {
-    let config = Object.assign({}, this.config);
+    const config = { ...this.config };
     config.duration = config.duration === Infinity ? 'inf' : config.duration;
 
-    let state = Object.assign({}, this.state);
+    const state = { ...this.state };
     // store lastTick as a difference so we can make sure to start where we left off when we hydrate
-    if (state.lastTick && isFinite(state.lastTick))  {
+    if (state.lastTick && isFinite(state.lastTick)) {
       state.lastTick = Date.now() - state.lastTick;
     }
 

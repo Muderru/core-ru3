@@ -1,9 +1,6 @@
-'use strict';
-
 const EventEmitter = require('events');
 
-class GameServer extends EventEmitter
-{
+class GameServer extends EventEmitter {
   /**
    * @param {commander} commander
    * @fires GameServer#startup

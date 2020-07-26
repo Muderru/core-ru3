@@ -1,5 +1,3 @@
-'use strict';
-
 const ChannelAudience = require('./ChannelAudience');
 
 /**
@@ -14,7 +12,7 @@ class PartyAudience extends ChannelAudience {
     }
 
     return this.sender.party.getBroadcastTargets()
-      .filter(player => player !== this.sender);
+      .filter((player) => player !== this.sender);
   }
 }
 

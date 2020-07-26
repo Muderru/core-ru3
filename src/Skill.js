@@ -1,5 +1,3 @@
-'use strict';
-
 const SkillFlag = require('./SkillFlag');
 const SkillType = require('./SkillType');
 const SkillErrors = require('./SkillErrors');
@@ -28,11 +26,11 @@ class Skill {
    */
   constructor(id, config, state) {
     const {
-      configureEffect = _ => _,
+      configureEffect = (_) => _,
       cooldown = null,
       effect = null,
       flags = [],
-      info = _ => {},
+      info = (_) => {},
       initiatesCombat = false,
       name,
       gender,
@@ -40,10 +38,10 @@ class Skill {
       aliases = [],
       requiresTarget = true,
       resource = null, /* format [{ attribute: 'someattribute', cost: 10}] */
-      run = _ => {},
+      run = (_) => {},
       targetSelf = false,
       type = SkillType.SKILL,
-      options = {}
+      options = {},
     } = config;
 
     this.configureEffect = configureEffect;
@@ -138,7 +136,6 @@ class Skill {
     damage.commit(player);
   }
 
-
   activate(player) {
     if (!this.flags.includes(SkillFlag.PASSIVE)) {
       return;
@@ -147,7 +144,6 @@ class Skill {
     if (!this.effect) {
       throw new Error('Passive skill has no attached effect');
     }
-
 
     let effect = this.state.EffectFactory.create(this.effect, { description: this.info(player) });
     effect = this.configureEffect(effect);
@@ -184,7 +180,7 @@ class Skill {
   }
 
   getCooldownId() {
-    return this.cooldownGroup ? "skillgroup:" + this.cooldownGroup : "skill:" + this.id;
+    return this.cooldownGroup ? `skillgroup:${this.cooldownGroup}` : `skill:${this.id}`;
   }
 
   /**
@@ -200,8 +196,8 @@ class Skill {
 
     const effect = this.state.EffectFactory.create(
       'cooldown',
-      { name: "Задержка: " + this.name, duration: this.cooldownLength * 1000 },
-      { cooldownId: this.getCooldownId() }
+      { name: `Задержка: ${this.name}`, duration: this.cooldownLength * 1000 },
+      { cooldownId: this.getCooldownId() },
     );
     effect.skill = this;
 
@@ -217,13 +213,13 @@ class Skill {
         type: 'cooldown',
       },
       state: {
-        cooldownId: null
+        cooldownId: null,
       },
       listeners: {
-        effectDeactivated: function () {
-          Broadcast.sayAt(this.target, `Вы снова можете использовать <bold>\'${this.skill.name}\'</bold> again.`);
-        }
-      }
+        effectDeactivated() {
+          Broadcast.sayAt(this.target, `Вы снова можете использовать <bold>'${this.skill.name}'</bold> again.`);
+        },
+      },
     };
   }
 
@@ -245,8 +241,8 @@ class Skill {
    */
   hasEnoughResource(character, resource) {
     return !resource.cost || (
-      character.hasAttribute(resource.attribute) &&
-      character.getAttribute(resource.attribute) >= resource.cost
+      character.hasAttribute(resource.attribute)
+      && character.getAttribute(resource.attribute) >= resource.cost
     );
   }
 }

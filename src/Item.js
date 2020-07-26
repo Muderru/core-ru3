@@ -1,13 +1,9 @@
-'use strict';
-
 const uuid = require('uuid/v4');
 
 const GameEntity = require('./GameEntity');
 const ItemType = require('./ItemType');
 const Logger = require('./Logger');
-const Metadatable = require('./Metadatable');
-const Player = require('./Player');
-const { Inventory, InventoryFullError } = require('./Inventory');
+const { Inventory } = require('./Inventory');
 
 /**
  * @property {Area}    area        Area the item belongs to (warning: this is not the area is currently in but the
@@ -41,7 +37,7 @@ const { Inventory, InventoryFullError } = require('./Inventory');
  * @extends GameEntity
  */
 class Item extends GameEntity {
-  constructor (area, item) {
+  constructor(area, item) {
     super(item);
     const validate = ['keywords', 'name', 'id'];
 
@@ -52,35 +48,35 @@ class Item extends GameEntity {
     }
 
     this.area = area;
-    this.metadata  = item.metadata || {};
+    this.metadata = item.metadata || {};
     this.behaviors = new Map(Object.entries(item.behaviors || {}));
     this.defaultItems = item.items || [];
     this.description = item.description || 'Ничего особенного.';
     this.entityReference = item.entityReference; // EntityFactory key
-    this.id          = item.id;
+    this.id = item.id;
 
-    this.maxItems    = item.maxItems || Infinity;
+    this.maxItems = item.maxItems || Infinity;
     this.initializeInventory(item.inventory, this.maxItems);
 
-    this.isEquipped  = item.isEquipped || false;
-    this.keywords    = item.keywords;
-    this.name        = item.name;
-    this.rname       = item.rname;
-    this.dname       = item.dname;
-    this.vname       = item.vname;
-    this.tname       = item.tname;
-    this.pname       = item.pname;
+    this.isEquipped = item.isEquipped || false;
+    this.keywords = item.keywords;
+    this.name = item.name;
+    this.rname = item.rname;
+    this.dname = item.dname;
+    this.vname = item.vname;
+    this.tname = item.tname;
+    this.pname = item.pname;
     this.Name = item.name[0].toUpperCase() + item.name.slice(1);
     this.Rname = item.rname[0].toUpperCase() + item.rname.slice(1);
     this.Dname = item.dname[0].toUpperCase() + item.dname.slice(1);
     this.Vname = item.vname[0].toUpperCase() + item.vname.slice(1);
     this.Tname = item.tname[0].toUpperCase() + item.tname.slice(1);
     this.Pname = item.pname[0].toUpperCase() + item.pname.slice(1);
-    this.gender      = item.gender;
-    this.damageVerb  = item.damageVerb;
-    this.room        = item.room || null;
-    this.roomDesc    = item.roomDesc || '';
-    this.script      = item.script || null;
+    this.gender = item.gender;
+    this.damageVerb = item.damageVerb;
+    this.room = item.room || null;
+    this.roomDesc = item.roomDesc || '';
+    this.script = item.script || null;
 
     if (typeof item.type === 'string') {
       this.type = ItemType[item.type] || item.type;
@@ -88,11 +84,11 @@ class Item extends GameEntity {
       this.type = item.type || ItemType.OBJECT;
     }
 
-    this.uuid        = item.uuid || uuid();
-    this.closeable   = item.closeable || item.closed || item.locked || false;
-    this.closed      = item.closed || false;
-    this.locked      = item.locked || false;
-    this.lockedBy    = item.lockedBy || null;
+    this.uuid = item.uuid || uuid();
+    this.closeable = item.closeable || item.closed || item.locked || false;
+    this.closed = item.closed || false;
+    this.locked = item.locked || false;
+    this.lockedBy = item.lockedBy || null;
 
     this.carriedBy = null;
     this.equippedBy = null;
@@ -154,7 +150,7 @@ class Item extends GameEntity {
     if (!this.inventory) {
       this.inventory = new Inventory({
         items: [],
-        max: this.maxItems
+        max: this.maxItems,
       });
     }
   }
@@ -236,9 +232,9 @@ class Item extends GameEntity {
     this.setupBehaviors(state.ItemBehaviorManager);
 
     this.description = serialized.description || this.description;
-    this.keywords    = serialized.keywords || this.keywords;
-    this.name        = serialized.name || this.name;
-    this.roomDesc    = serialized.roomDesc || this.roomDesc;
+    this.keywords = serialized.keywords || this.keywords;
+    this.name = serialized.name || this.name;
+    this.roomDesc = serialized.roomDesc || this.roomDesc;
     this.metadata = JSON.parse(JSON.stringify(serialized.metadata || this.metadata));
     this.closed = 'closed' in serialized ? serialized.closed : this.closed;
     this.locked = 'locked' in serialized ? serialized.locked : this.locked;
@@ -254,7 +250,7 @@ class Item extends GameEntity {
       this.inventory.hydrate(state, this);
     } else {
     // otherwise load its default inv
-      this.defaultItems.forEach(defaultItemId => {
+      this.defaultItems.forEach((defaultItemId) => {
         Logger.verbose(`\tDIST: Adding item [${defaultItemId}] to item [${this.name}]`);
         const newItem = state.ItemFactory.create(this.area, defaultItemId);
         newItem.hydrate(state);
@@ -270,7 +266,7 @@ class Item extends GameEntity {
 
   serialize() {
     const data = super.serialize();
-    let behaviors = {};
+    const behaviors = {};
     for (const [key, val] of this.behaviors) {
       behaviors[key] = val;
     }

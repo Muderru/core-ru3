@@ -1,7 +1,3 @@
-'use strict';
-
-const Room = require('./Room');
-
 /**
  * Keeps track of all the individual rooms in the game
  */
@@ -36,7 +32,7 @@ class RoomManager {
   }
 
   getInstanceRef(entityRef, instanceId = null) {
-    return entityRef + (instanceId ? '__' + instanceId : '');
+    return entityRef + (instanceId ? `__${instanceId}` : '');
   }
 }
 

@@ -1,5 +1,3 @@
-'use strict';
-
 const Npc = require('./Npc');
 const EntityFactory = require('./EntityFactory');
 

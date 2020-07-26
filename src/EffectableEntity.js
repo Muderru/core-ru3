@@ -1,5 +1,3 @@
-'use strict';
-
 const EventEmitter = require('events');
 const EffectList = require('./EffectList');
 const Attributes = require('./Attributes');
@@ -9,8 +7,7 @@ const Logger = require('./Logger');
  * Base class for game entities that can have effects/attributes
  * @extends EventEmitter
  */
-class EffectableEntity extends EventEmitter
-{
+class EffectableEntity extends EventEmitter {
   constructor(data) {
     super();
 
@@ -57,7 +54,7 @@ class EffectableEntity extends EventEmitter
     const { formula } = attribute;
 
     const requiredValues = formula.requires.map(
-      reqAttr => this.getMaxAttribute(reqAttr)
+      (reqAttr) => this.getMaxAttribute(reqAttr),
     );
 
     return formula.evaluate.apply(formula, [attribute, this, currentVal, ...requiredValues]);
@@ -168,7 +165,7 @@ class EffectableEntity extends EventEmitter
   }
 
   /**
-   * Update an attribute's base value. 
+   * Update an attribute's base value.
    *
    * NOTE: You _probably_ don't want to use this the way you think you do. You should not use this
    * for any temporary modifications to an attribute, instead you should use an Effect modifier.
@@ -220,7 +217,7 @@ class EffectableEntity extends EventEmitter
    * @return {number}
    */
   evaluateIncomingDamage(damage, currentAmount) {
-    let amount = this.effects.evaluateIncomingDamage(damage, currentAmount);
+    const amount = this.effects.evaluateIncomingDamage(damage, currentAmount);
     return Math.floor(amount);
   }
 
@@ -245,7 +242,7 @@ class EffectableEntity extends EventEmitter
     }
 
     if (!(this.attributes instanceof Attributes)) {
-      const attributes = this.attributes;
+      const { attributes } = this;
       this.attributes = new Attributes();
 
       for (const attr in attributes) {
@@ -255,7 +252,7 @@ class EffectableEntity extends EventEmitter
         }
 
         if (typeof attrConfig !== 'object' || !('base' in attrConfig)) {
-          throw new Error('Invalid base value given to attributes.\n' + JSON.stringify(attributes, null, 2));
+          throw new Error(`Invalid base value given to attributes.\n${JSON.stringify(attributes, null, 2)}`);
         }
 
         if (!state.AttributeFactory.has(attr)) {
@@ -286,4 +283,3 @@ class EffectableEntity extends EventEmitter
 }
 
 module.exports = EffectableEntity;
-

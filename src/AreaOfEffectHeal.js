@@ -1,5 +1,3 @@
-'use strict';
-
 const Heal = require('./Heal');
 const Room = require('./Room');
 const Character = require('./Character');
@@ -9,8 +7,7 @@ const Character = require('./Character');
  * default it will target all players in the room. To customize this behavior you
  * can extend this class and override the `getValidTargets` method
  */
-class AreaOfEffectHeal extends Heal
-{
+class AreaOfEffectHeal extends Heal {
   /**
    * @param {Room|Character} target
    * @throws RangeError
@@ -31,7 +28,6 @@ class AreaOfEffectHeal extends Heal
       super.commit(target);
     }
 
-
     /**
      * @event Room#areaHeal
      * @param {Heal} heal
@@ -48,7 +44,7 @@ class AreaOfEffectHeal extends Heal
    */
   getValidTargets(room) {
     const targets = [...room.players];
-    return targets.filter(t => t.hasAttribute(this.attribute));
+    return targets.filter((t) => t.hasAttribute(this.attribute));
   }
 }
 

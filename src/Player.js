@@ -1,12 +1,7 @@
-'use strict';
-
-const Attributes = require('./Attributes');
 const Character = require('./Character');
 const CommandQueue = require('./CommandQueue');
 const Config = require('./Config');
-const Data = require('./Data');
 const QuestTracker = require('./QuestTracker');
-const Room = require('./Room');
 const Logger = require('./Logger');
 const PlayerRoles = require('./PlayerRoles');
 
@@ -28,13 +23,14 @@ class Player extends Character {
     this.account = data.account || null;
     this.experience = data.experience || 0;
     this.extraPrompts = new Map();
-    this.password  = data.password;
+    this.password = data.password;
     this.prompt = data.prompt || '> ';
     this.socket = data.socket || null;
-    const questData = Object.assign({
+    const questData = {
       completed: [],
-      active: []
-    }, data.quests);
+      active: [],
+      ...data.quests,
+    };
 
     this.questTracker = new QuestTracker(this, questData.active, questData.completed);
     this.commandQueue = new CommandQueue();
@@ -75,7 +71,7 @@ class Player extends Character {
    * @param {object} extraData Any extra data to give the prompt access to
    */
   interpolatePrompt(promptStr, extraData = {}) {
-    let attributeData = {};
+    const attributeData = {};
     for (const [attr, value] of this.attributes) {
       attributeData[attr] = {
         current: this.getAttribute(attr),
@@ -132,7 +128,7 @@ class Player extends Character {
    * @fires Room#playerEnter
    * @fires Player#enterRoom
    */
-  moveTo(nextRoom, onMoved = _ => _) {
+  moveTo(nextRoom, onMoved = (_) => _) {
     const prevRoom = this.room;
     if (this.room && this.room !== nextRoom) {
       /**
@@ -192,7 +188,7 @@ class Player extends Character {
       for (const slot in eqDefs) {
         const itemDef = eqDefs[slot];
         try {
-          let newItem = state.ItemFactory.create(state.AreaManager.getArea(itemDef.area), itemDef.entityReference);
+          const newItem = state.ItemFactory.create(state.AreaManager.getArea(itemDef.area), itemDef.entityReference);
           newItem.initializeInventory(itemDef.inventory);
           newItem.hydrate(state, itemDef);
           state.ItemManager.add(newItem);
@@ -210,7 +206,7 @@ class Player extends Character {
     }
 
     if (typeof this.room === 'string') {
-      let room = state.RoomManager.getRoom(this.room);
+      const room = state.RoomManager.getRoom(this.room);
       if (!room) {
         this.emit('unknownRoom', this.room);
         return;
@@ -222,7 +218,7 @@ class Player extends Character {
   }
 
   serialize() {
-    let data = Object.assign(super.serialize(), {
+    const data = Object.assign(super.serialize(), {
       account: this.account.name,
       experience: this.experience,
       inventory: this.inventory && this.inventory.serialize(),
@@ -234,8 +230,8 @@ class Player extends Character {
     });
 
     if (this.equipment instanceof Map) {
-      let eq = {};
-      for (let [ slot, item ] of this.equipment) {
+      const eq = {};
+      for (const [slot, item] of this.equipment) {
         eq[slot] = item.serialize();
       }
       data.equipment = eq;

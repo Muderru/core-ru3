@@ -1,8 +1,7 @@
-'use strict';
 const bcrypt = require('bcryptjs');
 const EventEmitter = require('events');
 const Metadatable = require('./Metadatable');
-const Data   = require('./Data');
+const Data = require('./Data');
 
 /**
  * Representation of a player's account
@@ -13,15 +12,14 @@ const Data   = require('./Data');
  * @property {boolean} banned Whether this account is banned or not
  */
 class Account extends Metadatable(EventEmitter) {
-
   /**
    * @param {Object} data Account save data
    */
   constructor(data) {
     super();
-    this.username   = data.username;
+    this.username = data.username;
     this.characters = data.characters || [];
-    this.password   = data.password;
+    this.password = data.password;
     this.banned = data.banned || false;
     this.deleted = data.deleted || false;
     this.guild = data.guild || '';
@@ -41,7 +39,7 @@ class Account extends Metadatable(EventEmitter) {
    * @param {string} username
    */
   addCharacter(username) {
-    this.characters.push({ username: username, deleted : false});
+    this.characters.push({ username, deleted: false });
   }
 
   /**
@@ -49,14 +47,14 @@ class Account extends Metadatable(EventEmitter) {
    * @return {boolean}
    */
   hasCharacter(name) {
-    return this.characters.find(c => c.username === name);
+    return this.characters.find((c) => c.username === name);
   }
 
   /**
    * @param {string} name Delete one of the chars
    */
   deleteCharacter(name) {
-    var picked = this.characters.find(c => c.username === name);
+    const picked = this.characters.find((c) => c.username === name);
     picked.deleted = true;
     this.save();
   }
@@ -65,7 +63,7 @@ class Account extends Metadatable(EventEmitter) {
    * @param {string} name Removes the deletion of one of the chars
    */
   undeleteCharacter(name) {
-    var picked = this.characters.find(c => c.username === name);
+    const picked = this.characters.find((c) => c.username === name);
     picked.deleted = false;
     this.save();
   }
@@ -107,7 +105,7 @@ class Account extends Metadatable(EventEmitter) {
    There is no undelete because this can just be done by manually editing the account file
    */
   deleteAccount() {
-    this.characters.forEach(char => {
+    this.characters.forEach((char) => {
       this.deleteCharacter(char.username);
     });
     this.deleted = true;
@@ -143,7 +141,7 @@ class Account extends Metadatable(EventEmitter) {
       characters,
       password,
       guild,
-      metadata
+      metadata,
     };
   }
 }

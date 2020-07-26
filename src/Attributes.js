@@ -1,4 +1,3 @@
-'use strict';
 const { Attribute, AttributeFormula } = require('./Attribute');
 
 /**
@@ -6,8 +5,7 @@ const { Attribute, AttributeFormula } = require('./Attribute');
  *
  * @extends Map
  */
-class Attributes extends Map
-{
+class Attributes extends Map {
   /**
    * @param {Attribute} attribute
    */
@@ -30,7 +28,7 @@ class Attributes extends Map
    * Clear all deltas for all attributes in the list
    */
   clearDeltas() {
-    for (let [_, attr] of this) {
+    for (const [_, attr] of this) {
       attr.setDelta(0);
     }
   }
@@ -40,7 +38,7 @@ class Attributes extends Map
    * @return {Object}
    */
   serialize() {
-    let data = {};
+    const data = {};
     [...this].forEach(([name, attribute]) => {
       data[name] = attribute.serialize();
     });

@@ -1,7 +1,3 @@
-'use strict';
-
-const B = require('./Broadcast');
-
 /**
  * Representation of an in game helpfile
  */

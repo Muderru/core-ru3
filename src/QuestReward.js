@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Representation of a quest reward
  * The {@link http://ranviermud.com/extending/areas/quests/|Quest guide} has instructions on to
@@ -27,4 +25,3 @@ class QuestReward {
 }
 
 module.exports = QuestReward;
-
