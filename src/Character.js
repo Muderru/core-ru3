@@ -292,6 +292,24 @@ class Character extends Metadatable(EffectableEntity) {
   }
 
   /**
+   * Check to see if this character has a equipped particular item by EntityReference
+   * @param {EntityReference} itemReference
+   * @return {Item|boolean}
+   */
+  hasEquippedItem(itemReference) {
+    if (!this.equipment) {
+      return false;
+    }
+    for (const [slot, item] of this.equipment) {
+      if (item.entityReference === itemReference) {
+        return item;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * @private
    */
   _setupInventory() {
