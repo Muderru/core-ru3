@@ -89,6 +89,7 @@ class Item extends GameEntity {
     this.closed = item.closed || false;
     this.locked = item.locked || false;
     this.lockedBy = item.lockedBy || null;
+    this.materials = item.materials || [];
 
     this.carriedBy = null;
     this.equippedBy = null;
@@ -234,6 +235,11 @@ class Item extends GameEntity {
     this.description = serialized.description || this.description;
     this.keywords = serialized.keywords || this.keywords;
     this.name = serialized.name || this.name;
+    this.rname = serialized.rname || this.rname;
+    this.dname = serialized.dname || this.dname;
+    this.vname = serialized.vname || this.vname;
+    this.tname = serialized.tname || this.tname;
+    this.pname = serialized.pname || this.pname;
     this.roomDesc = serialized.roomDesc || this.roomDesc;
     this.metadata = JSON.parse(JSON.stringify(serialized.metadata || this.metadata));
     this.closed = 'closed' in serialized ? serialized.closed : this.closed;
@@ -282,6 +288,11 @@ class Item extends GameEntity {
       description: this.description,
       keywords: this.keywords,
       name: this.name,
+      rname: this.rname,
+      dname: this.dname,
+      vname: this.vname,
+      tname: this.tname,
+      pname: this.pname,
       roomDesc: this.roomDesc,
 
       closed: this.closed,
